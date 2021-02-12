@@ -1,0 +1,54 @@
+/* RESET BASIQUE */
+html, body {
+    width:100%;
+    font-size: 16px;
+    padding:0;
+    margin:0;
+    background-color: rgb(245, 245, 216);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    width:80%;
+    height:300px;
+    object-fit: cover;
+}
+
+header, footer {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    width:100%;
+    text-align: center;
+    padding:1rem;
+}
+
+nav a {
+    display: inline-block;
+    text-decoration: none;
+    padding:1rem;
+}
+
+body.index section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+body.index article {
+    width: calc(100% / 3);
+    padding: 1rem;
+}
+
+form {
+    padding:1rem;
+}
+
+/* CSS POUR UNE PAGE SPECIFIQUE */
+body.index article {
+    background-color: #dddddd;
+}
+

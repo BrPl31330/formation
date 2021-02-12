@@ -5,6 +5,7 @@
 class index
 {
     // PROPRIETES
+    static $filename = "";
 
     // METHODES (conseil pour le nom: verbe)
 
@@ -25,12 +26,30 @@ class index
         }
         extract(pathinfo($path));
         $codeTemplate = "Template::$filename";
+
+        // je vais memoriser $filename dans une propriété statique
+        // pour pouvoir réutiliser plus tard
+        index::$filename = $filename;
+
         if (is_callable($codeTemplate)) {
+            // pour les pages
             $codeTemplate();            // ON EXECUTE DU CODE DYNAMIQUEMENT
         }
         else {
-            header("HTTP/1.0 404 Not Found");
-            Template::error404();
+            // On va chercher dans la table SQL articles 
+            // si on a une ligne qui correspond à $filename sur la colonne slug
+            // SELECT * FROM articles WHERE slug = :slug
+            $query      = Model::lireArticle("slug", $filename);    // on envoie la requete SQL
+            $article    = $query->fetch(); // fetch ramene le resultat (la ligne SQL) dans le monde PHP
+            if ($article) {     // si on a une ligne
+                // afficher l'article avec les infos recuperees par la requete
+                Template::article($article);
+            }
+            else {
+                // erreur 404 sinon
+                header("HTTP/1.0 404 Not Found");
+                Template::error404();
+            }
         }
     }
 
